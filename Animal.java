@@ -209,7 +209,7 @@ public class Animal implements GUIListener {
    * @return true if otherAnimal is close to this animal with respect to range
    */
   public boolean isClose(int x, int y, int range) {
-    if (x >= (this.getX() + 0) && x <= (this.getX() + range) && y >= (this.getY() + 0)
+    if (x >= (this.getX() - range) && x <= (this.getX() + range) && y >= (this.getY() - range)
         && y <= (this.getY() + range)) {
       return true;
     }
@@ -226,8 +226,8 @@ public class Animal implements GUIListener {
    * @return true if otherAnimal is close to the current tiger
    */
   public boolean isClose(Animal otherAnimal, int range) {
-    if (otherAnimal.getX() >= (this.getX() + 0) && otherAnimal.getX() <= (this.getX() + range)
-        && otherAnimal.getY() >= (this.getY() + 0) && otherAnimal.getY() <= (this.getY() + range)) {
+    if (otherAnimal.getX() >= (this.getX() - range) && otherAnimal.getX() <= (this.getX() + range)
+        && otherAnimal.getY() >= (this.getY() - range) && otherAnimal.getY() <= (this.getY() + range)) {
       return true;
     }
     return false;

@@ -43,18 +43,18 @@ public class Rabbit extends Animal {
     int[] carrot = Carrots.getFirstCarrot();
     int newX = 0;
     int newY = 0;
+    int d = (int) Math.sqrt(((carrot[1] - super.getX()) * (carrot[1] - super.getX()))
+        + ((carrot[2] - super.getY()) * (carrot[2] - super.getY())));
     if (carrot != null) {
       if (super.isClose(carrot[1], carrot[2], hopStep)) {
         this.setX(carrot[1]);
         this.setY(carrot[2]);
         Carrots.remove(carrot[0]);
       } else {
-        newX = (super.getX() + (hopStep * (carrot[1] - super.getX())))
-            / (int) Math.sqrt(((carrot[1] - super.getX()) * (carrot[1] - super.getX()))
-                + ((carrot[2] - super.getY()) * (carrot[2] - super.getY())));
-        newY = (super.getY() + (hopStep * (carrot[2] - super.getY())))
-            / (int) Math.sqrt(((carrot[1] - super.getX()) * (carrot[1] - super.getX()))
-                + ((carrot[2] - super.getY()) * (carrot[2] - super.getY())));
+        newX = super.getX() + ((hopStep * (carrot[1] - super.getX())) / d);
+        newY = super.getY() + ((hopStep * (carrot[2] - super.getY())) / d);
+        this.setX(newX);
+        this.setY(newY);
       }
     }
   }
@@ -65,7 +65,44 @@ public class Rabbit extends Animal {
     // call the mousePressed defined in the Animal super class
     super.mousePressed();
     // call hopTowardsCarrot() method
-    hopTowardsCarrot();
+    if (super.isMouseOver()) {
+      hopTowardsCarrot();
+    }
   }
+
+  /**
+   * This method watches out for wolves. Checks if there is a wolf in the Rabbit.scanRange of this
+   * Rabbit.
+   *
+   * @return true if the current rabbit is close to at least one wolf
+   */
+  public boolean watchOutForWolf() {
+    // TODO complete the implementation of this method
+    // Traverse the processing.objects arraylist checking
+    // whether there is a wolf which is close by Rabbit.scanRange
+    // of this rabbit.
+    for(int i = 0; i < processing.objects.size(); i++) {
+      if(processing.objects.get(i) instanceof Wolf) {
+        if(this.isClose((Animal)processing.objects.get(i), getScanRange())) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Watches out for a wolf and display a Warning message "WOLF!" if there is any wolf in its
+   * neighborhood.
+   */
+  @Override
+  public void action() {
+    if (watchOutForWolf()) {
+      // this.setScaredImage();
+      processing.fill(0); // specify font color: black
+      processing.text("WOLF!", this.getX(), this.getY() - this.image.height / 2 - 6);
+    }
+  }
+
 
 }

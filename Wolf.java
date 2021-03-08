@@ -29,4 +29,57 @@ public class Wolf extends Animal {
     return scanRange;
   } // gets the scanRange of a Wolf
 
+  /**
+   * Moves to the position of the specified rabbit passed as input, and eats it. The eaten rabbit
+   * will be removed from the patch and he number of eaten rabbits by this wolf is incremented by
+   * one.
+   * 
+   * @param rabbit rabbit to eat by this wolf
+   */
+  public void eatRabbit(Rabbit rabbit) {
+    // if the mouse is over the current Wolf, release it so the Wolf can move
+    // ahead to the position of rabbit and eat it.
+    if (isMouseOver())
+      this.mouseReleased();
+    // TODO
+    // 1. set the position of the current Wolf to the position of the rabbit
+    this.setX(rabbit.getX());
+    this.setY(rabbit.getY());
+    // 2. remove the rabbit from the patch
+    super.processing.objects.remove(rabbit);
+    // 3. increment the number of eaten rabbits by one
+    rabbitEatenCount++;
+  }
+
+  /**
+   * Defines the action of this wolf in the carrot patch. This wolf lookup for rabbits in its
+   * neighborhood (Wolf.scanRange) and eats the first found rabbit only. This method also displays
+   * the number of rabbit eaten by this wolf if any.
+   */
+  @Override
+  public void action() {
+    // TODO
+    // Traverse processing.objects arraylist, search for the first rabbit which
+    // is close to this wolf with respect to Wolf.scanRange, and eats it.
+    // If no rabbit is found in the neighborhood, nothing will be done.
+    for(int i = 0; i < processing.objects.size(); i++) {
+      if(processing.objects.get(i) instanceof Rabbit) {
+        if(this.isClose((Animal)processing.objects.get(i), getScanRange())) {
+          eatRabbit((Rabbit)processing.objects.get(i));
+        }
+      }
+    }
+    
+    if (rabbitEatenCount > 0)
+      displayrabbitEatenCount(); // display rabbitEatenCount
+  }
+
+  /**
+   * Displays the number of eaten rabbits if any on the top of the Wolf image
+   */
+  public void displayrabbitEatenCount() {
+    processing.fill(0); // specify font color: black
+    // display rabbitEatenCount on the top of the Wolf’s image
+    processing.text(rabbitEatenCount, this.getX(), this.getY() - this.image.height / 2 - 6);
+  }
 }
