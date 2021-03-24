@@ -7,8 +7,6 @@ public class Palindrome {
     String returnString = "" + start;
     if (start > 'A') {
       return returnString + " " + mirrorA((char) (start - 1)) + " " + returnString;
-    } else if (start < 'A') {
-      return returnString + " " + mirrorA((char) (start + 1)) + " " + returnString;
     } else {
       return "A";
     }
@@ -37,9 +35,7 @@ public class Palindrome {
       throw new IllegalArgumentException("The input must be a capital char!");
     }
     String returnString = "" + start;
-    if (start > 'Z') {
-      return returnString + " " + mirrorZ((char) (start - 1)) + " " + returnString;
-    } else if (start < 'Z') {
+    if (start < 'Z') {
       return returnString + " " + mirrorZ((char) (start + 1)) + " " + returnString;
     } else {
       return "Z";
