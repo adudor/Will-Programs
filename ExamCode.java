@@ -69,16 +69,18 @@ public class CitySorter {
     // The other sub-problem can be decomposed into smaller sub-problems of the same type
     int returnIndex = index;
 
-    String[] partition = new String[data.length-index-1];
+    String[] partition = new String[data.length-index];
     for (int i = 0; i < partition.length; i++) {
-      partition[i] = data[index+1+i];
-
+      partition[i] = data[index+i];
     }
-    if(returnIndex < min(partition,0,partition.length-1)) {
-      return returnIndex;
+    
+    int smallestPartition = min(partition, 0, partition.length);
+    
+    if(returnIndex > smallestPartition) {
+      returnIndex = smallestPartition;
     }
-    return getMinimum(partition,index+1);
-
+    
+    return returnIndex;
   }
 
 
