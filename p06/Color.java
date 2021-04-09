@@ -4,5 +4,5 @@
  *
  */
 public enum Color {
-    BLUE, BROWN, YELLOW;
+	BLUE, BROWN, YELLOW;
 }
