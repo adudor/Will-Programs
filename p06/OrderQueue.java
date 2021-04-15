@@ -1,7 +1,9 @@
 import java.util.Iterator;
 
 public class OrderQueue implements QueueADT<Order> , java.lang.Iterable<Order> {
-
+private LinkedOrder front;
+private LinkedOrder back;
+private LinkedOrder size;
 	@Override
 	public Iterator<Order> iterator() {
 		// TODO Auto-generated method stub
