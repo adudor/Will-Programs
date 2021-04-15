@@ -3,27 +3,28 @@ import java.util.NoSuchElementException;
 
 public class OrderIterator implements Iterator<Order> {
 
-	private LinkedOrder current;
+  private LinkedOrder current;
 
-	public OrderIterator(LinkedOrder start) {
-		current = start;
+  public OrderIterator(LinkedOrder start) {
+    current = start;
 
-	}
+  }
 
-	public boolean hasNext() {
-		if (current.getNext() != null) {
-			return false;
-		} else {
-			return true;
-		}
-	}
+  public boolean hasNext() {
+    if (current.getNext() == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
-	public Order next() throws NoSuchElementException {
-		if (hasNext() != true) {
-			throw new NoSuchElementException("There are no more orders to return!");
-		} else {
-			return current.getNext().getOrder();
-		}
+  public Order next() throws NoSuchElementException {
+    if (!hasNext()) {
+      throw new NoSuchElementException("There are no more orders to return!");
+    } else {
+      current = current.getNext();
+      return current.getOrder();
+    }
 
-	}
+  }
 }
