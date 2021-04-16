@@ -11,7 +11,7 @@ public class OrderIterator implements Iterator<Order> {
   }
 
   public boolean hasNext() {
-    if (current.getNext().getNext() == null) {
+    if (current == null) {
       return false;
     } else {
       return true;
@@ -22,14 +22,9 @@ public class OrderIterator implements Iterator<Order> {
     if (!hasNext()) {
       throw new NoSuchElementException("There are no more orders to return!");
     } else {
+      Order returnOrder = current.getOrder();
       current = current.getNext();
-      if(!hasNext()) {
-        return current.getOrder();
-      } else {
-        current = current.getNext();
-        return current.getOrder();
-      }
+      return returnOrder;
     }
-
   }
 }
