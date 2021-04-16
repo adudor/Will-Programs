@@ -10,30 +10,74 @@ public class OrderQueueTester {
     if(!OrderIteratorTester()) {
       return false;
     } 
-    if(!OrderQueueTest()) {
+    if(!testEnqueue()) {
       return false;
     }
+    if(!testDequeue()) {
+      return false;
+    }
+    if(!testPeekAndIsEmpty()) {
+      return false;
+    }
+    System.out.println("passed");
     return true;
 
   }
   
-  public static boolean OrderQueueTest() {
+  public static boolean testPeekAndIsEmpty() {
     OrderQueue queue = new OrderQueue();
     Order order1 = new Order("Tacos", 10);
     Order order2 = new Order("Pizza", 30);
-    Order order3 = new Order("Burger", 12);
+    if(!queue.isEmpty()) {
+      return false;
+    }
+    try {
+      queue.peek();
+      return false;
+    } catch (Exception e) {
+      if(!e.getMessage().contains("empty")) {
+        return false;
+      }
+    }
     queue.enqueue(order1);
-    if(queue.isEmpty() || !queue.peek().equals(order1)) {
+    queue.enqueue(order2);
+    if(!queue.peek().equals(order1)) {
+      return false;
+    }
+    return true;
+  }
+  
+  public static boolean testDequeue() {
+    OrderQueue queue = new OrderQueue();
+    Order order1 = new Order("Tacos", 10);
+    Order order2 = new Order("Pizza", 30);
+    queue.enqueue(order1);
+    queue.enqueue(order2);
+    queue.dequeue();
+    if(queue.isEmpty()) {
       return false;
     }
     queue.dequeue();
     if(!queue.isEmpty()) {
       return false;
     }
-    queue.enqueue(order2);
-    queue.enqueue(order3);
-    System.out.println(queue.toString());
-    
+    try {
+      queue.dequeue();
+    } catch (Exception e) {
+      if(!e.getMessage().contains("empty")) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
+  public static boolean testEnqueue() {
+    OrderQueue queue = new OrderQueue();
+    Order order1 = new Order("Tacos", 10);
+    queue.enqueue(order1);
+    if(queue.isEmpty()) {
+      return false;
+    }
     return true;
   }
 
@@ -47,7 +91,7 @@ public class OrderQueueTester {
     if (!iterator.hasNext()) {
       return false;
     }
-    if (!iterator.next().equals(order2.getOrder())) {
+    if (!iterator.next().equals(order1.getOrder())) {
       return false;
     }
     return true;
