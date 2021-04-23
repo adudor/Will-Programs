@@ -215,18 +215,27 @@ public class MovieTreeTester {
    * @return true when this test verifies a correct functionality, and false otherwise
    */
   public static boolean testGetBestMovie() {
-    MovieTree tree = new MovieTree();
-    Movie best = new Movie(2012, 9.5, "Incredibles");
-    tree.addMovie(new Movie(1990, 5.5, "Shrek"));
-    tree.addMovie(new Movie(1980, 4.6, "Nemo"));
-    tree.addMovie(new Movie(1985, 3.2, "Cinderella"));
-    tree.addMovie(new Movie(2000, 8.0, "Avengers"));
-    tree.addMovie(new Movie(1995, 6.9, "Hulk"));
-    tree.addMovie(new Movie(2010, 5.7, "Superbad"));
-    tree.addMovie(new Movie(2012, 9.0, "Batman"));
-    tree.addMovie(best);
-    if (!tree.getBestMovie().equals(best)) {
-      return false;
+    {
+      MovieTree tree = new MovieTree();
+      Movie best = new Movie(2012, 9.5, "Incredibles");
+      tree.addMovie(new Movie(1990, 5.5, "Shrek"));
+      tree.addMovie(new Movie(1980, 4.6, "Nemo"));
+      tree.addMovie(new Movie(1985, 3.2, "Cinderella"));
+      tree.addMovie(new Movie(2000, 8.0, "Avengers"));
+      tree.addMovie(new Movie(1995, 6.9, "Hulk"));
+      tree.addMovie(new Movie(2010, 5.7, "Superbad"));
+      tree.addMovie(new Movie(2012, 9.0, "Batman"));
+      tree.addMovie(best);
+      if (!tree.getBestMovie().equals(best)) {
+        return false;
+      }
+    }
+    {
+      MovieTree tree = new MovieTree();
+      Movie best = null;
+      if(tree.getBestMovie() != best) {
+        return false;
+      }
     }
     return true;
   }
@@ -282,7 +291,7 @@ public class MovieTreeTester {
       list3.add(superbad);
       list3.add(incredibles);
       try {
-        if (tree.lookup(1900, 5.5).equals(list1)) {
+        if (!tree.lookup(1900, 5.5).equals(list1)) {
           System.out.println("2a");
           return false;
         }
@@ -316,6 +325,7 @@ public class MovieTreeTester {
         }
       }
     }
+    System.out.println("all");
     return true;
   }
 
