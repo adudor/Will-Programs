@@ -238,7 +238,7 @@ public class OrderPriorityQueueTester {
     // TODO implement this method, then go modify the relevant methods in your
     // OrderPriorityQueue class so that they pass your tests
     try {
-      OrderPriorityQueue queue = new OrderPriorityQueue(0);
+      OrderPriorityQueue queue = new OrderPriorityQueue(-1);
       System.out.println("1a");
       return false;
     } catch (IllegalArgumentException e) {
