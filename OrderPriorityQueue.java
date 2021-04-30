@@ -97,7 +97,25 @@ public class OrderPriorityQueue implements PriorityQueueADT<Order> {
     // TODO Remove the root Order of the heap and re-structure the heap to ensure that its ordering
     // is valid, then return the previous root
     Order returnOrder = queueHeap[0];
-    size--;
+    int counter = 0;
+    for (int i = 0; i < size; i++) {
+      if (queueHeap[i].equals(returnOrder)) {
+        queueHeap[i] = null;
+        counter++;
+      }
+    }
+    
+    // move all null elements to end of array
+    Order[] arrayHolder = new Order[queueHeap.length];
+    int j = 0;
+    for (int i = 0; i < arrayHolder.length; i++) {
+      if (queueHeap[i] != null) {
+        arrayHolder[j++] = queueHeap[i];
+      }
+    }
+    queueHeap = arrayHolder;
+
+    size -= counter;
     for (int i = size / 2; i >= 0; i--) {
       percolateDown(queueHeap, i, size);
     }

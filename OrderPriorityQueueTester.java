@@ -108,10 +108,11 @@ public class OrderPriorityQueueTester {
     orders[4] = new Order("Burger", 70);
     OrderPriorityQueue.percolateUp(orders, 4);
     String arrayString = "";
-    for(int i = 0; i < orders.length; i++) {
-      arrayString += orders[i].toString()+", ";
+    for (int i = 0; i < orders.length; i++) {
+      arrayString += orders[i].toString() + ", ";
     }
-    if(!arrayString.equals("1005: Burger (70), 1001: Pizza (60), 1003: Tacos (10), 1004: Pasta (20), 1002: Shrimp (5), ")) {
+    if (!arrayString.equals(
+        "1005: Burger (70), 1001: Pizza (60), 1003: Tacos (10), 1004: Pasta (20), 1002: Shrimp (5), ")) {
       return false;
     }
     return true; // included to prevent compiler errors
@@ -138,9 +139,9 @@ public class OrderPriorityQueueTester {
     queue.insert(new Order("Pasta", 20));
     queue.insert(new Order("Burger", 30));
     queue.insert(new Order("Chicken", 100));
-    if(!queue.toString().equals("1006(100), 1005(30), 1001(60), 1002(10), 1004(20), 1003(5)")) {
+    if (!queue.toString().equals("1006(100), 1005(30), 1001(60), 1002(10), 1004(20), 1003(5)")) {
       return false;
-    }  
+    }
     return true;
   }
 
@@ -164,12 +165,13 @@ public class OrderPriorityQueueTester {
     orders[2] = new Order("Tacos", 10);
     orders[3] = new Order("Pasta", 20);
     orders[4] = new Order("Burger", 70);
-    OrderPriorityQueue.percolateDown(orders, 0, 4);
+    OrderPriorityQueue.percolateDown(orders, 0, 6);
     String arrayString = "";
-    for(int i = 0; i < orders.length; i++) {
-      arrayString += orders[i].toString()+", ";
+    for (int i = 0; i < orders.length; i++) {
+      arrayString += orders[i].toString() + ", ";
     }
-    if(!arrayString.equals("1005: Burger (70), 1001: Pizza (60), 1003: Tacos (10), 1004: Pasta (20), 1002: Shrimp (5), ")) {
+    if (!arrayString.equals(
+        "1005: Burger (70), 1001: Pizza (60), 1004: Pasta (20), 1003: Tacos (10), 1002: Shrimp (5), ")) {
       return false;
     }
     return true;
@@ -206,20 +208,20 @@ public class OrderPriorityQueueTester {
     queue.removeBest();
     queue.removeBest();
     queue.removeBest();
-    if(!queue.toString().equals("1003(5)")) {
+    if (!queue.peekBest().equals(new Order("Shrimp", 5))) {
       System.out.println(queue.toString());
       return false;
     }
-    if(queue.isEmpty()) {
+    if (queue.isEmpty()) {
       System.out.println("2");
       return false;
     }
     queue.removeBest();
-    if(!queue.isEmpty()) {
+    if (!queue.isEmpty()) {
       System.out.println("3");
       return false;
     }
-    
+
     return true;
   }
 
@@ -242,29 +244,35 @@ public class OrderPriorityQueueTester {
     // OrderPriorityQueue class so that they pass your tests
     try {
       OrderPriorityQueue queue = new OrderPriorityQueue(0);
+      System.out.println("1a");
       return false;
     } catch (IllegalArgumentException e) {
-      if(!e.getMessage().contains("Invalid capcity")) {
+      if (!e.getMessage().contains("Invalid capacity")) {
+        System.out.println("1b");
         return false;
       }
     }
-    
+
     try {
       OrderPriorityQueue queue = new OrderPriorityQueue(1);
       queue.peekBest();
+      System.out.println("2a");
       return false;
     } catch (NoSuchElementException e) {
-      if(!e.getMessage().contains("empty heap")) {
+      if (!e.getMessage().contains("Empty Heap")) {
+        System.out.println("2b");
         return false;
       }
     }
-    
+
     try {
       OrderPriorityQueue queue = new OrderPriorityQueue(1);
       queue.removeBest();
+      System.out.println("3a");
       return false;
     } catch (NoSuchElementException e) {
-      if(!e.getMessage().contains("empty")) {
+      if (!e.getMessage().contains("empty")) {
+        System.out.println("3b");
         return false;
       }
     }
