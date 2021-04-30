@@ -238,12 +238,10 @@ public class OrderPriorityQueueTester {
     // TODO implement this method, then go modify the relevant methods in your
     // OrderPriorityQueue class so that they pass your tests
     try {
-      OrderPriorityQueue queue = new OrderPriorityQueue(-1);
-      System.out.println("1a");
+      OrderPriorityQueue queue = new OrderPriorityQueue(0);
       return false;
     } catch (IllegalArgumentException e) {
       if (!e.getMessage().contains("Invalid capacity")) {
-        System.out.println("1b");
         return false;
       }
     }
@@ -251,11 +249,9 @@ public class OrderPriorityQueueTester {
     try {
       OrderPriorityQueue queue = new OrderPriorityQueue(1);
       queue.peekBest();
-      System.out.println("2a");
       return false;
     } catch (NoSuchElementException e) {
       if (!e.getMessage().contains("Empty Heap")) {
-        System.out.println("2b");
         return false;
       }
     }
@@ -263,11 +259,9 @@ public class OrderPriorityQueueTester {
     try {
       OrderPriorityQueue queue = new OrderPriorityQueue(1);
       queue.removeBest();
-      System.out.println("3a");
       return false;
     } catch (NoSuchElementException e) {
       if (!e.getMessage().contains("empty")) {
-        System.out.println("3b");
         return false;
       }
     }

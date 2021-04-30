@@ -24,7 +24,7 @@ public class OrderPriorityQueue implements PriorityQueueADT<Order> {
    */
   public OrderPriorityQueue(int capacity) {
     // TODO throw IllegalArgumentException if capacity is invalid
-    if (capacity < 0) {
+    if (capacity <= 0) {
       throw new IllegalArgumentException("Invalid capacity.");
     }
     // TODO initialize data fields appropriately
