@@ -165,13 +165,13 @@ public class OrderPriorityQueueTester {
     orders[2] = new Order("Tacos", 10);
     orders[3] = new Order("Pasta", 20);
     orders[4] = new Order("Burger", 70);
-    OrderPriorityQueue.percolateDown(orders, 0, 6);
+    OrderPriorityQueue.percolateDown(orders, 0, 5);
     String arrayString = "";
     for (int i = 0; i < orders.length; i++) {
       arrayString += orders[i].toString() + ", ";
     }
     if (!arrayString.equals(
-        "1005: Burger (70), 1001: Pizza (60), 1004: Pasta (20), 1003: Tacos (10), 1002: Shrimp (5), ")) {
+        "1002: Pizza (60), 1005: Burger (70), 1003: Tacos (10), 1004: Pasta (20), 1001: Shrimp (5), ")) {
       return false;
     }
     return true;
@@ -201,24 +201,19 @@ public class OrderPriorityQueueTester {
     queue.insert(new Order("Pasta", 20));
     queue.insert(new Order("Burger", 30));
     queue.insert(new Order("Chicken", 100));
-    System.out.println(queue.toString());
-    queue.removeBest();
-    System.out.println(queue.toString());
     queue.removeBest();
     queue.removeBest();
     queue.removeBest();
     queue.removeBest();
-    if (!queue.peekBest().equals(new Order("Shrimp", 5))) {
-      System.out.println(queue.toString());
+    queue.removeBest();
+    if (!queue.peekBest().getDishName().equals("Shrimp")) {
       return false;
     }
     if (queue.isEmpty()) {
-      System.out.println("2");
       return false;
     }
     queue.removeBest();
     if (!queue.isEmpty()) {
-      System.out.println("3");
       return false;
     }
 

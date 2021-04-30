@@ -73,13 +73,15 @@ public class OrderPriorityQueue implements PriorityQueueADT<Order> {
    */
   protected static void percolateUp(Order[] heap, int orderIndex) {
     // TODO implement the max heap percolate up algorithm to modify the heap in-place
-    if (orderIndex <= 0) {
-      return;
-    }
-    if (heap[orderIndex].compareTo(heap[getParentIndex(orderIndex)]) == -1) {
-      swap(heap, orderIndex, getParentIndex(orderIndex));
-      percolateUp(heap, getParentIndex(orderIndex));
-    }
+    while (orderIndex > 0) {
+      int parentIndex = (orderIndex - 1) / 2;
+      if (heap[orderIndex].compareTo(heap[parentIndex]) != -1)
+         return;
+      else {
+         swap(heap, orderIndex, parentIndex);
+         orderIndex = parentIndex;
+      }
+   }
   }
 
   /**
@@ -91,7 +93,7 @@ public class OrderPriorityQueue implements PriorityQueueADT<Order> {
   @Override
   public Order removeBest() {
     // TODO If the queue is empty, throw a NoSuchElementException
-    if(isEmpty()) {
+    if (isEmpty()) {
       throw new NoSuchElementException("Queue is empty.");
     }
     // TODO Remove the root Order of the heap and re-structure the heap to ensure that its ordering
@@ -104,7 +106,7 @@ public class OrderPriorityQueue implements PriorityQueueADT<Order> {
         counter++;
       }
     }
-    
+
     // move all null elements to end of array
     Order[] arrayHolder = new Order[queueHeap.length];
     int j = 0;
@@ -133,30 +135,29 @@ public class OrderPriorityQueue implements PriorityQueueADT<Order> {
    */
   protected static void percolateDown(Order[] heap, int orderIndex, int size) {
     // TODO implement the max heap percolate down algorithm to modify the heap in-place
-    if (heap[getLeftChildIndex(orderIndex)] == null
-        && heap[getRightChildIndex(orderIndex)] == null) {
-      return;
-    } else if (heap[getRightChildIndex(orderIndex)] == null) { // only need to check left child
-      if (heap[orderIndex].compareTo(heap[getLeftChildIndex(orderIndex)]) == 1) {
-        swap(heap, orderIndex, getLeftChildIndex(orderIndex));
-        percolateDown(heap, getLeftChildIndex(orderIndex), size);
-      }
-    } else {
-      // left child has higher priority
-      if (heap[getLeftChildIndex(orderIndex)]
-          .compareTo(heap[getRightChildIndex(orderIndex)]) == -1) {
-        if (heap[orderIndex].compareTo(heap[getLeftChildIndex(orderIndex)]) == 1) {
-          swap(heap, orderIndex, getLeftChildIndex(orderIndex));
-          percolateDown(heap, getLeftChildIndex(orderIndex), size);
-        }
-      } else { // right child has higher priority
-        if (heap[orderIndex].compareTo(heap[getRightChildIndex(orderIndex)]) == 1) {
-          swap(heap, orderIndex, getRightChildIndex(orderIndex));
-          percolateDown(heap, getRightChildIndex(orderIndex), size);
-        }
-      }
-    }
+        int childIndex = 2 * orderIndex + 1;
+        Order value = heap[orderIndex];
 
+        while (childIndex < size) {
+           // Find the max among the node and all the node's children
+           Order maxValue = value;
+           int maxIndex = -1;
+           for (int i = 0; i < 2 && i + childIndex < size; i++) {
+              if (heap[i + childIndex].compareTo(maxValue) == -1) {
+                 maxValue = heap[i + childIndex];
+                 maxIndex = i + childIndex;
+              }
+           }
+
+           if (maxValue == value) {
+              return;
+           }
+           else {
+              swap(heap, orderIndex, maxIndex);
+              orderIndex = maxIndex;
+              childIndex = 2 * orderIndex + 1;
+           }
+        }
   }
 
   /**
