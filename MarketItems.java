@@ -29,7 +29,10 @@ public class MarketItems {
    * @return true if this BST is empty and false otherwise
    */
   public boolean isEmpty() {
-    return false; // TODO CHANGE THIS: included to avoid compiler errors
+    if (root == null) {
+      return true;
+    }
+    return false;
   }
 
   // MAKE SURE TO SAVE your source file before uploading it to gradescope.
@@ -50,19 +53,31 @@ public class MarketItems {
 
     // base case1: the current subtree is empty (node is null) --> add newItem, and
     // return the new root (node) of this subtree
-
+    if (node == null) {
+      node = new BSTNode<Item>(newItem);
+      return node;
+    }
 
     // base case2: subtree contains a match with node
+    if (node.getData().equals(newItem)) {
+      throw new IllegalArgumentException();
+    }
 
 
     // recursive case: recurse left
-    // try to insert newItem to the left subtree 
+    // try to insert newItem to the left subtree
     // Hint: node.setLeft(/* recursive call */);
+    if (node.getLeft() == null) {
+      node.setLeft(addHelper(newItem, node.getLeft()));
+    }
 
     // else recursive case: recurse right
     // try to insert newItem to the right subtree
     // Hint: node.setRight(/* recursive call */);
-    
+    else if (node.getRight() == null) {
+      node.setRight(addHelper(newItem, node.getRight()));
+    }
+
     return node; // return the root of this subtree
   }
 
@@ -82,7 +97,7 @@ public class MarketItems {
    * @return the size of this BST
    */
   public int size() {
-    return sizeHelper(root); 
+    return sizeHelper(root);
   }
 
   /**
@@ -92,8 +107,23 @@ public class MarketItems {
    * @return the size of the subtree rooted at node
    */
   protected static int sizeHelper(BSTNode<Item> node) {
-    // TODO Complete this method
-    return 0; // TODO CHANGE THIS: included to avoid compiler errors
+    int count = 0;
+    if (node != null) {
+      count++;
+    }
+    if (node.getLeft() != null) {
+      count++;
+    }
+    if (node.getRight() != null) {
+      count++;
+    }
+    if (node.getLeft() != null) {
+      sizeHelper(node.getLeft());
+    }
+    if (node.getRight() != null) {
+      sizeHelper(node.getRight());
+    }
+    return count; // TODO CHANGE THIS: included to avoid compiler errors
   }
 
   // MAKE SURE TO SAVE your source file before uploading it to gradescope.
@@ -110,17 +140,29 @@ public class MarketItems {
   }
 
   /**
-   * Recursively searches for the name and price of an item given its unique identifier in the binary
-   * search tree rooted at node
+   * Recursively searches for the name and price of an item given its unique identifier in the
+   * binary search tree rooted at node
    * 
-   * @param id    unique identifier of the item to find
+   * @param id   unique identifier of the item to find
    * @param node root of the subtree that is being searched
    * @return The pair name and price of the item to find in the format "name(price)"
    * @throws NoSuchElementException when no item in the BST rooted at node has that identifier
    */
   protected String findHelper(int id, BSTNode<Item> node) {
-    // TODO Complete this method
-    return null; // default return statement included to avoid compiler errors
+    String match = "";
+    if (node == null) {
+      throw new NoSuchElementException();
+    } else if (node.getData().getID() == id) {
+      match = node.getData().getName() + "(" + node.getData().getPrice() + ")";
+    } else {
+      if (node.getLeft() != null) {
+        match = findHelper(id, node.getLeft());
+      } else if (node.getRight() != null) {
+        match = findHelper(id, node.getRight());
+      }
+    }
+    return match;
+
   }
 
 
@@ -132,12 +174,12 @@ public class MarketItems {
    * @return true when this test verifies a correct functionality, and false otherwise
    */
   public static boolean testAddFindSize() {
-    Item i1 = new Item ("Milk", 2.5);
-    Item i2 = new Item ("Eggs", 2.0);
-    Item i3 = new Item ("Apples", 3.5);
-    Item i4 = new Item ("Grapes", 5.0);
-    Item i5 = new Item ("Yogurt", 4.5);
-    
+    Item i1 = new Item("Milk", 2.5);
+    Item i2 = new Item("Eggs", 2.0);
+    Item i3 = new Item("Apples", 3.5);
+    Item i4 = new Item("Grapes", 5.0);
+    Item i5 = new Item("Yogurt", 4.5);
+
     MarketItems items = new MarketItems();
     try {
       items.add(i1);
