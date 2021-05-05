@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 import java.util.EmptyStackException;
+import java.util.LinkedList;
 
 /**
  * A FancyStack is a linked list based stack of strings. It includes a dummy node at the top of the
@@ -27,6 +28,9 @@ public class FancyStack {
    */
   public FancyStack() {
     // TODO complete the implementation of this constructor
+    LinkedList<LinkedNode<String>> stack = new LinkedList<LinkedNode<String>>();
+    top = new LinkedNode<String>("TOP", null);
+    stack.add(top);
   }
 
   /**
@@ -37,8 +41,10 @@ public class FancyStack {
   public boolean isEmpty() {
     // This stack is empty if it contains one node (the dummy node ONLY)
     // TODO complete the implementation of this method
-
-    return false; // default return statement added to let this code to compile
+    if(top.getNext() != null) {
+      return false;
+    }
+    return true; // default return statement added to let this code to compile
   }
 
   /**
@@ -50,6 +56,14 @@ public class FancyStack {
    */
   public void push(String value) {
     // TODO complete the implementation of this method
+    LinkedNode<String> node = new LinkedNode<String>(value);
+    if(top.getNext() == null) {
+      top.setNext(node);
+    } else {
+      LinkedNode<String> next = top.getNext();
+      top.setNext(node);
+      node.setNext(next);
+    }
   }
 
   /**
@@ -61,7 +75,10 @@ public class FancyStack {
    */
   public String peek() {
     // TODO complete the implementation of this method
-    return null; // default return statement added to let this code to compile
+    if(isEmpty()) {
+      throw new EmptyStackException();
+    }
+    return top.getNext().getData();
   }
 
   /**
@@ -74,8 +91,16 @@ public class FancyStack {
     // Note that the dummy node at index 0 should never be popped. This method removes and returns
     // the element at index 1 of the linked list.
     // TODO complete the implementation of this method
-
-    return null; // default statement added to let this code to compile
+    if(isEmpty()) {
+      throw new EmptyStackException();
+    }
+    String returnString = top.getNext().getData();
+    if(top.getNext().getNext() != null) {
+      top.setNext(top.getNext().getNext());
+    } else {
+      top.setNext(null);
+    }
+    return returnString; // default statement added to let this code to compile
   }
 
   /**
@@ -104,15 +129,37 @@ public class FancyStack {
 
     // TODO create an empty FancyStack and check that it creates a fancy stack which is empty and
     // whose string representation equals "TOP -> END"
+    FancyStack stack = new FancyStack();
+    if(!stack.isEmpty()) {
+      return false;
+    }
+    if(!stack.toString().equals("TOP -> END")) {
+      return false;
+    }
     
     // TODO try to call peek() on the empty stack and check whether an EmptyStackException is
     // thrown as expected
+    try {
+      stack.peek();
+      return false;
+    } catch(EmptyStackException e) {
+      
+    }
 
     // TODO try to push at least three VALID different strings, and check the correctness of
     // push(), peek(), and isEmpty(). You can use the toString() method to check the contents of
     // the stack
+    stack.push("A");
+    stack.push("B");
+    stack.push("C");
+    if(stack.isEmpty()) {
+      return false;
+    }
+    if(!stack.peek().equals("C")) {
+      return false;
+    }
 
-    return false; // CHANGE this (added to avoid compile errors)
+    return true; // CHANGE this (added to avoid compile errors)
   }
 
 
